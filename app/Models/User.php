@@ -12,6 +12,9 @@ class User extends Authenticatable
     /** @use HasFactory<\Database\Factories\UserFactory> */
     use HasFactory, Notifiable;
 
+    protected $table = 'usuarios';
+    public $timestamps = false;
+
     /**
      * The attributes that are mass assignable.
      *
@@ -44,5 +47,29 @@ class User extends Authenticatable
             'email_verified_at' => 'datetime',
             'password' => 'hashed',
         ];
+    }
+
+    public function hasRole(int $roleId): bool
+    {
+        return $this->id_rol === $roleId;
+    }
+
+    // Métodos de conveniencia
+    public function isAdmin(): bool
+    {
+        // Asumiendo que el ID 1 es el Administrador
+        return $this->id_rol === 1; 
+    }
+
+    public function isDepartamento(): bool
+    {
+        // Asumiendo que el ID 2 es el Departamento
+        return $this->id_rol === 2; 
+    }
+    
+    public function isUsuario(): bool
+    {
+        // Asumiendo que el ID 3 es el Usuario Básico
+        return $this->id_rol === 3; 
     }
 }
