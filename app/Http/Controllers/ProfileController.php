@@ -57,4 +57,25 @@ class ProfileController extends Controller
 
         return Redirect::to('/');
     }
+
+    public function updateProfilePhoto(Request $request)
+    {
+        $request->validate([
+            'photo' => 'required|image|max:1024',
+        ]);
+
+        $path = $request->file('photo')->store('profiles', 'public');
+
+        $user = Auth::user();
+
+        // Lógica para eliminar foto antigua si existe...
+        if ($user->profile_photo_path) {
+            Storage::disk('public')->delete($user->profile_photo_path);
+        }
+
+        $user->profile_photo_path = $path;
+        $user->save();
+
+        return back()->with('status', 'Foto de perfil actualizada.');
+    }
 }
