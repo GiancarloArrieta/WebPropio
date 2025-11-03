@@ -20,19 +20,16 @@ class RedirectIfAuthenticatedAndAuthorized
 
         foreach ($guards as $guard) {
             if (Auth::guard($guard)->check()) {
-                
-                // ⬇️ Lógica de Redirección por Rol ⬇️
 
                 if (Auth::user()->isAdmin()) {
-                    return redirect('/admin/dashboard'); // Redirección para Administradores
+                    return redirect('/admin/dashboard');
                 }
                 
                 if (Auth::user()->isDepartamento()) {
-                    return redirect('/departamento/panel'); // Redirección para Departamentos
+                    return redirect('/departamento/panel');
                 }
                 
-                // Si no es ninguno de los anteriores, usa la redirección por defecto (Usuario Básico)
-                return redirect('/usuario/home'); 
+                return redirect()->route('home');
             }
         }
 

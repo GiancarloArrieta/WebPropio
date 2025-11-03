@@ -23,6 +23,10 @@ class SeederUsuariosPrueba extends Seeder
             'email' => 'admin@dulcesricos.com',
             'password' => Hash::make('admin123'),
             'id_rol' => 1],
+            ['name' => 'Giancarlo',
+            'email' => 'giancarlo@dulcesricos.com',
+            'password' => Hash::make('prueba123'),
+            'id_rol' => 3],
         ]);
     }
 }

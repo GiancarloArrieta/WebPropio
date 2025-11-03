@@ -12,7 +12,7 @@
         <input type="email" id="email" name="email" placeholder="micorreo@dulcesricos.com" required/><br>
         <br>
         <label for="password">Contraseña:</label><br>
-        <input type="password" id="password" name="password" placeholder="12345" required/><br>
+        <input type="password" id="password" name="password" required/><br>
         <br>
         @error('email')
             <span style="color: red">{{ $message }}</span>

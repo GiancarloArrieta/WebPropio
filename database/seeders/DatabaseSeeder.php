@@ -20,7 +20,6 @@ class DatabaseSeeder extends Seeder
             SeederEstatus::class,
             SeederRoles::class,
             SeederUsuariosPrueba::class,
-            SeederUsuarioFoto::class,
         ]);
         
     }

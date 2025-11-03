@@ -11,6 +11,17 @@
         <img src="{{ asset('storage/profiles/default-profile.png') }}"
             style="width: 100px; height: 100px; border-radius: 70%;">
     @endif
+
+    <form method="get" action="/perfil/editar">
+        <button type="submit">Editar perfil</button>
+    </form>
+
+    <form method="POST" action="/usuario/ticket">
+        @csrf 
+        
+        <button type="submit">Generar ticket</button>
+    </form>
+
     <form method="POST" action="/logout">
         @csrf 
         

@@ -28,20 +28,11 @@ class AuthenticatedSessionController extends Controller
 
         $request->session()->regenerate();
 
-        $user = Auth::user(); // Obtenemos el usuario autenticado
-
-        if ($user->id_rol === 1) {
-            // Asumiendo que 1 es el Administrador
-            return redirect('/admin/panel'); 
-            
-        } elseif ($user->id_rol === 2) {
-            // Asumiendo que 2 es el Departamento
-            return redirect('/departamento/panel');
-            
-        } else {
-            // Cualquier otro rol (Usuario Básico)
-            return redirect('/usuario/panel'); 
-        }
+        $user = Auth::user();
+        if ($user->id_rol !== 1) {
+        \Illuminate\Support\Facades\Log::error('FALLO CRÍTICO: Admin logueado con Rol ID: ' . $user->id_rol);
+    }
+        return redirect()->intended(route('home'));
     }
 
     /**
