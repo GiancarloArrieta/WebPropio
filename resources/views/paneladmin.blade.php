@@ -1,9 +1,8 @@
 @extends('layout')
 
-@section('tile','Inicio de sesión')
+@section('tile','Panel de administrador')
 
 @section('content')
-    <h1>Iniciaste sesión como administrador</h1>
     @if (Auth::user()->profile_photo_path)
         <img src="{{ asset('storage/' . Auth::user()->profile_photo_path) }}"
             style="width: 100px; height: 100px; border-radius: 70%;">
@@ -11,6 +10,9 @@
         <img src="{{ asset('storage/profiles/default-profile.png') }}"
             style="width: 100px; height: 100px; border-radius: 70%;">
     @endif
+
+    <h1>Hola, {{ $user->name }}</h1>
+
     <form method="POST" action="/logout">
     @csrf 
     

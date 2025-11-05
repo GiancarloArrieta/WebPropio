@@ -4,21 +4,25 @@ use Illuminate\Support\Facades\Route;
 use Illuminate\Support\Facades\Auth;
 use App\Http\Controllers\Auth\AuthenticatedSessionController;
 use App\Http\Controllers\ProfileController;
+use App\Http\Controllers\TicketController;
 
 Route::get('/login', function () {
     return view('login');
 })->name('login');
 
 Route::get('/admin/panel', function () {
-    return view('paneladmin');
+    $user = Auth::user();
+    return view('paneladmin', compact('user'));
 })->middleware(['auth', 'role:admin'])->name('admin.panel');
 
 Route::get('/departamento/panel', function () {
-    return view('paneldepartamento');
+    $user = Auth::user();
+    return view('paneldepartamento', compact('user'));
 })->middleware(['auth', 'role:departamento'])->name('departamento.panel');
 
 Route::get('/usuario/panel', function () {
-    return view('panelusuario');
+    $user = Auth::user();
+    return view('panelusuario', compact('user'));
 })->middleware(['auth', 'role:usuario'])->name('usuario.panel');
 
 Route::get('/', function () {
@@ -38,15 +42,13 @@ Route::post('/login', [AuthenticatedSessionController::class, 'store']);
 Route::post('/logout', [AuthenticatedSessionController::class, 'destroy'])->name('logout');
 
 Route::middleware('auth')->group(function () {
-    
     Route::get('/perfil/editar', [ProfileController::class, 'edit'])->name('profile.edit');
-    
-    // 2. PATCH para actualizar nombre/correo
     Route::patch('/profile/update/info', [ProfileController::class, 'updateInfo'])->name('profile.update.info');
-    
-    // 3. POST para actualizar la foto
     Route::post('/profile/update/photo', [ProfileController::class, 'updatePhoto'])->name('profile.photo.update');
-
-    // 4. PATCH para actualizar la contraseña 🔑 ESTA ES LA RUTA FALTANTE
     Route::patch('/profile/update/password', [ProfileController::class, 'updatePassword'])->name('profile.update.password');
 });
+
+Route::get('/usuario/ticket', function () {
+    return view('crearticket');
+})->middleware(['auth', 'role:usuario'])->name('crear.ticket');
+Route::post('/usuario/ticket', [TicketController::class, 'store'])->name('crear.ticket');

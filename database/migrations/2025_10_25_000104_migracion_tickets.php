@@ -17,6 +17,7 @@ return new class extends Migration
             $table->foreignId('id_encargado')->nullable()->constrained('usuarios');
             $table->string('título');
             $table->text('descripción');
+            $table->dateTime('fecha_hora_reporte');
             $table->foreignId('id_estatus')->constrained('estatus');
             $table->text('observaciones')->nullable();
         });

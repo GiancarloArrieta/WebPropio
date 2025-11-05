@@ -1,6 +1,6 @@
 @extends('layout')
 
-@section('tile','Inicio de sesión')
+@section('tile','Editar perfil')
 
 @section('content')
     <h1>Editar Perfil de {{ $user->name }}</h1>
