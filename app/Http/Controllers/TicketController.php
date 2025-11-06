@@ -50,4 +50,47 @@ class TicketController extends Controller
         return redirect()->route('crear.ticket')
                          ->with('status', '¡Ticket de soporte creado exitosamente! Un encargado lo revisará pronto.');
     }
+
+    /**
+     * Muestra los detalles de un ticket específico.
+     * @param \App\Models\Tickets $ticket El ticket inyectado por Route Model Binding.
+     */
+    public function show(Tickets $ticket)
+    {
+        // 1. Autorización: Aseguramos que solo el usuario creador pueda ver el ticket (puedes añadir más roles si es necesario).
+        if ($ticket->id_usuario !== Auth::id() /* && !Auth::user()->is_admin */) {
+            abort(403, 'Acceso no autorizado a este recurso.');
+        }
+
+        // 2. Cargar relaciones para mostrar la información completa
+        $ticket->load(['estatus', 'usuario', 'encargado']);
+
+        return view('detallesticket', compact('ticket'));
+    }
+
+    /**
+     * Elimina un ticket solo si su estatus es "Pendiente" y el usuario es el creador.
+     * @param \App\Models\Tickets $ticket El ticket inyectado por Route Model Binding.
+     */
+    public function destroy(Tickets $ticket)
+    {
+        // 1. Autorización: Solo el creador puede intentar eliminarlo.
+        if ($ticket->id_usuario !== Auth::id()) {
+            return back()->withErrors(['error' => 'No tienes permiso para eliminar este ticket.']);
+        }
+
+        // 2. Validación de Estatus: Cargar la relación para obtener el nombre del estatus.
+        // Usamos load() para asegurarnos de que el estatus esté disponible.
+        $ticket->load('estatus');
+        
+        if ($ticket->estatus->nombre !== 'Pendiente') {
+            return back()->withErrors(['error' => 'Solo puedes eliminar tickets con estatus "Pendiente".']);
+        }
+
+        // 3. Eliminación
+        $ticket->delete();
+
+        // 4. Redirección
+        return redirect()->route('usuario.panel')->with('status', 'Ticket eliminado exitosamente.');
+    }
 }

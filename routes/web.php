@@ -5,6 +5,7 @@ use Illuminate\Support\Facades\Auth;
 use App\Http\Controllers\Auth\AuthenticatedSessionController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\TicketController;
+use App\Http\Controllers\UsuarioController;
 
 Route::get('/login', function () {
     return view('login');
@@ -46,9 +47,12 @@ Route::middleware('auth')->group(function () {
     Route::patch('/profile/update/info', [ProfileController::class, 'updateInfo'])->name('profile.update.info');
     Route::post('/profile/update/photo', [ProfileController::class, 'updatePhoto'])->name('profile.photo.update');
     Route::patch('/profile/update/password', [ProfileController::class, 'updatePassword'])->name('profile.update.password');
+    Route::get('/usuario/panel', [ProfileController::class, 'showPanel'])->name('usuario.panel');
 });
 
-Route::get('/usuario/ticket', function () {
-    return view('crearticket');
-})->middleware(['auth', 'role:usuario'])->name('crear.ticket');
-Route::post('/usuario/ticket', [TicketController::class, 'store'])->name('crear.ticket');
+Route::middleware('auth')->group(function () {
+    Route::get('/tickets/crear', [TicketController::class, 'create'])->name('tickets.create');
+    Route::post('/tickets', [TicketController::class, 'store'])->name('tickets.store'); 
+    Route::get('/tickets/{ticket}', [TicketController::class, 'show'])->name('tickets.show');
+    Route::delete('/tickets/{ticket}', [TicketController::class, 'destroy'])->name('tickets.destroy');
+});

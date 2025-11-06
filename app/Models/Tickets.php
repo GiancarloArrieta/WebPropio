@@ -50,7 +50,7 @@ class Tickets extends Model
     public function usuario()
     {
         // Asumiendo que tu modelo de usuario se llama 'Usuario'
-        return $this->belongsTo(Usuario::class, 'id_usuario');
+        return $this->belongsTo(User::class, 'id_usuario');
     }
 
     /**
@@ -59,7 +59,7 @@ class Tickets extends Model
     public function encargado()
     {
         // Asumiendo que tu modelo de usuario se llama 'Usuario'
-        return $this->belongsTo(Usuario::class, 'id_encargado');
+        return $this->belongsTo(User::class, 'id_encargado');
     }
 
     /**
