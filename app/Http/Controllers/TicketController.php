@@ -12,7 +12,7 @@ class TicketController extends Controller
 {
     public function create()
     {
-        return view('tickets.create-ticket');
+        return view('crearticket');
     }
 
     /**
@@ -47,7 +47,7 @@ class TicketController extends Controller
         ]);
 
         // 4. Redirección y mensaje de éxito
-        return redirect()->route('crear.ticket')
+        return redirect()->route('tickets.create')
                          ->with('status', '¡Ticket de soporte creado exitosamente! Un encargado lo revisará pronto.');
     }
 

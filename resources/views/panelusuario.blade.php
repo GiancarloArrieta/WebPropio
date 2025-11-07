@@ -13,18 +13,22 @@
 
     <h1>Hola, {{ $user->name }}</h1>
 
+    <p>Departamento: {{ $user->departamento }}
+    <br>
+    Puesto: {{ $user->puesto }}</p>
+
     <form method="get" action="/perfil/editar">
         <button type="submit">Editar perfil</button>
     </form>
 
-    <form method="GET" action="/usuario/ticket">
+    <form method="GET" action="/tickets/crear">
         <button type="submit">Generar ticket</button>
     </form>
 
     <h2>Mis Tickets Reportados</h2>
 
     @if ($tickets->isEmpty())
-        <p>Aún no has generado ningún ticket. ¡Haz clic en el botón para crear uno!</p>
+        <p>Aún no has generado ningún ticket.</p>
     @else
         <table border="1" cellpadding="10" cellspacing="0" style="width: 100%; margin-top: 15px;">
             <thead>

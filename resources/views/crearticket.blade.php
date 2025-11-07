@@ -9,6 +9,12 @@
     <div class="py-12">
         <div class="max-w-3xl mx-auto sm:px-6 lg:px-8">
             <div class="bg-white overflow-hidden shadow-xl sm:rounded-lg p-6">
+
+                @if (session('status'))
+                    <div class="bg-green-100 border border-green-400 text-green-700 px-4 py-3 rounded mb-6" role="alert">
+                        {{ session('status') }}
+                    </div>
+                @endif
                 
                 <h3 class="text-2xl font-bold mb-6 text-gray-700 border-b pb-2">Detalles del Problema</h3>
 
@@ -25,7 +31,7 @@
                     </div>
                 @endif
                 
-                <form method="POST" action="{{ route('crear.ticket') }}">
+                <form method="POST" action="{{ route('tickets.store') }}">
                     @csrf
 
                     <div class="mb-5">
@@ -71,4 +77,9 @@
             </div>
         </div>
     </div>
+
+    <form method="get" action="/">
+        <button type="submit">Regresar</button>
+    </form>
+
 @endsection
